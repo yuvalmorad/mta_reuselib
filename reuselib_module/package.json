@@ -1,0 +1,23 @@
+{
+  "name": "reuselib_module",
+  "version": "0.0.1",
+  "devDependencies": {
+    "@sapui5/ts-types": "1.71.x",
+    "@ui5/cli": "2.2.6",
+    "@sap/ui5-builder-webide-extension": "1.0.x",
+    "bestzip": "2.1.4",
+    "rimraf": "3.0.2"
+  },
+  "scripts": {
+    "build": "npm run clean && ui5 build --include-task=generateManifestBundle generateCachebusterInfo && cp ./xs-app.json dist && npm run flatten && npm run zip && npm run clean-after-flatten",
+    "flatten": "cp -r dist/resources/ns/reuselib/* dist && cp dist/resources/ns/reuselib/.library dist",
+    "zip": "cd dist && npx bestzip ../reuselib_module-content.zip *",
+    "clean": "npx rimraf reuselib_module-content.zip dist",
+    "clean-after-flatten": "rm -rf dist/resources dist/test-resources"
+  },
+  "ui5": {
+    "dependencies": [
+      "@sap/ui5-builder-webide-extension"
+    ]
+  }
+}

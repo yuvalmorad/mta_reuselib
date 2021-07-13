@@ -1,0 +1,67 @@
+_schema-version: "3.2"
+ID: mta_reuselib
+version: 0.0.1
+modules:
+- name: mta_reuselib-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: mta_reuselib-destination-service
+    parameters:
+      content-target: true
+  - name: mta_reuselib_html_repo_host
+    parameters:
+      service-key:
+        name: mta_reuselib_html_repo_host-key
+
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: reuselibservice_mta_reuselib_html_repo_host
+          ServiceInstanceName: mta_reuselib-html5-app-host-service
+          ServiceKeyName: mta_reuselib_html_repo_host-key
+          sap.cloud.service: sampleservice
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+- name: mta_reuselib_ui_deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: mta_reuselib_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - reuselib_module-content.zip
+      name: reuselib_module
+      target-path: resources/
+- name: reuselib_module
+  type: html5
+  path: reuselib_module
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+resources:
+- name: mta_reuselib-destination-service
+  type: org.cloudfoundry.existing-service
+  parameters:
+    service: destination
+    service-name: mta_app-destination-service
+    service-plan: lite
+- name: mta_reuselib_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: mta_reuselib-html5-app-host-service
+    service-plan: app-host
+
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install

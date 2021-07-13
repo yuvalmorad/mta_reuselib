@@ -1,0 +1,42 @@
+{
+	"_version": "1.12.0",
+
+	"sap.app": {
+		"id": "ns.reuselib",
+		"type": "library",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"title": "lib",
+		"description": "",
+		"ach": "",
+		"offline": true
+	},
+	"sap.ui": {
+		"technology": "UI5"
+	},
+
+	"sap.ui5": {
+		"dependencies": {
+			"minUI5Version": "1.52.0",
+			"libs": {
+				"sap.ui.core": {
+					"minUI5Version": "1.52.0"
+				}
+			}
+		},
+		"library": {
+			"i18n": "messagebundle.properties",
+			"css": true,
+			"content": {
+				"controls": ["ns.reuselib.Example"],
+				"elements": [],
+				"types": [],
+				"interfaces": []
+			}
+		}
+    },
+      "sap.cloud": {
+    "service": "sampleservice"
+  }
+}
