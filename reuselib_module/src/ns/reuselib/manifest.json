@@ -36,7 +36,8 @@
 			}
 		}
     },
-      "sap.cloud": {
-    "service": "sampleservice"
+    "sap.cloud": {
+    "service": "reuselibservice"
+
   }
 }
